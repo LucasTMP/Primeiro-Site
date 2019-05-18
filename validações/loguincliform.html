@@ -1,0 +1,116 @@
+<html>
+<head>
+<title> Teste Form </title>
+</head>
+<body>
+</br>
+</br>
+<form method="post"  action="gravar.jsp" name="loguincliform">
+</br>
+<input type="text"  name="lclicpf" >
+</br>
+<input type="password" name="lclisenha">
+</br>
+<input type="button" value="Logar" onclick="lclivali()">
+</br>
+<input type="reset" value="Limpar">
+</from>
+
+<script type="text/javascript">
+
+function lclivali(){
+
+//cpf do cliente --------------------------------------------------------------------------------------
+  var ccpf, cpfsoma, cpfresto;
+  soma = 0;
+  ccpf = document.loguincliform.lclicpf.value;
+  if ((ccpf=="") || (ccpf.length == 0) || (ccpf.length > 11) || (ccpf == "00000000000") || (ccpf == "11111111111") || (ccpf == "22222222222") || (ccpf == "33333333333") || (ccpf == "44444444444") || (ccpf == "55555555555") || (ccpf == "66666666666") || (ccpf == "77777777777") || (ccpf == "88888888888") || (ccpf == "99999999999")){
+                alert("Preencha o campo CPF corretamente.");
+                document.loguincliform.lclicpf.focus();
+                document.loguincliform.lclicpf.style.background = "#ffcc99";
+                document.loguincliform.lclicpf.value = "";
+                document.loguincliform.lclisenha.style.background = "#f2f2f2";
+                return false
+      } else {
+              //valida 1 digito
+              cpfsoma = 0;
+               for (i=0; i < 9; i ++){
+                 cpfsoma += parseInt(ccpf.charAt(i)) * (10 - i);
+                   cpfresto = 11 - (cpfsoma % 11);
+                              }
+                     if (cpfresto == 10 || cpfresto == 11){
+                        cpfresto = 0;
+                                  }
+
+                          if (cpfresto != parseInt(ccpf.charAt(9))){
+                          alert("Digite um CPF válido.");
+                          document.loguincliform.lclicpf.focus();
+                          document.loguincliform.lclicpf.style.background = "#ffcc99";
+                          document.loguincliform.lclicpf.value = "";
+                          document.loguincliform.lclisenha.style.background = "#f2f2f2";
+                       return false;
+                                    }
+
+                    //valida 2 digito
+                    cpfsoma = 0;
+                      for (i = 0; i < 10; i ++){
+                      cpfsoma += parseInt(ccpf.charAt(i)) * (11 - i);
+                      cpfresto = 11 - (cpfsoma % 11);
+                                    }
+                        if (cpfresto == 10 || cpfresto == 11){
+                          cpfresto = 0;
+                                    }
+                      if (cpfresto != parseInt(ccpf.charAt(10))){
+                        alert("Digite um CPF válido.");
+                        document.loguincliform.lclicpf.focus();
+                        document.loguincliform.lclicpf.style.background = "#ffcc99";
+                        document.loguincliform.lclicpf.value = "";
+                        document.loguincliform.lclisenha.style.background = "#f2f2f2";
+                        return false;
+                                  }
+      }
+
+  //Validar e verificar senha do cliente----------------------------------------------------------------------
+  var lsenhacli;
+lsenhacli = document.loguincliform.lclisenha.value
+  if ((lsenhacli =="") || (lsenhacli.length < 4)){
+    alert("Senha Errada.");
+    document.loguincliform.lclisenha.focus();
+    document.loguincliform.lclisenha.style.background = "#ffcc99";
+    document.loguincliform.lclisenha.value = "";
+    document.loguincliform.lclicpf.style.background = "#f2f2f2";
+    return false;
+  }
+
+  //ter numero e letra
+    var lmais = 0;
+    var numero = 0;
+    var i = 0
+      for (i; i <= lsenhacli.length; i++) {
+        var valorAscii = lsenhacli.charCodeAt(i)
+        // A- Z
+        if (valorAscii >= 65 && valorAscii <= 90)
+          lmais++;
+        // 0 - 9
+        if (valorAscii >= 48 && valorAscii <= 57)
+          numero++;
+                }
+
+      if ((lmais < 1 || numero < 1) || (lsenhacli=="1234") || (lsenhacli== "4321") || (lsenhacli.charAt(0) == lsenhacli.charAt(1)) & (lsenhacli.charAt(1) == lsenhacli.charAt(2)) & (lsenhacli.charAt(2) == lsenhacli.charAt(3))){
+        alert("Senha Errada.");
+        document.loguincliform.lclisenha.focus();
+        document.loguincliform.lclisenha.style.background = "#ffcc99";
+        document.loguincliform.lclisenha.value = "";
+        document.loguincliform.lclicpf.style.background = "#f2f2f2";
+        return false;
+              }
+
+//mandar para o banco de dados------------------------------------------
+document.loguincliform.submit();
+}
+
+</script>
+
+
+</body>
+</html>

@@ -1,0 +1,78 @@
+<html>
+<head>
+<title> Teste Form </title>
+</head>
+<body>
+</br>
+</br>
+<form method="post"  action="gravar.jsp" name="admform">
+</br>
+<input type="text"  name="admnome" >
+</br>
+<input type="password" name="admsenha">
+</br>
+<input type="button" value="Registrar" onclick="admvali()">
+</br>
+<input type="reset" value="Limpar">
+</from>
+
+<script type="text/javascript">
+
+function admvali(){
+
+  //Validar Nome do adm---------------------------------------------------------------------------
+        var nomeadm;
+        nomeadm= document.admform.admnome.value;
+        if (nomeadm == "" || nomeadm.length == 0) {
+          alert("Preencha o campo nome.");
+          document.admform.admnome.focus();
+          document.admform.admnome.style.background = "#ffcc99";
+          document.admform.admnome.value = "";
+          document.admform.admsenha.style.background = "#f2f2f2";
+          return false
+            }
+
+  //Validar e verificar senha do adm----------------------------------------------------------------------
+  var senhaadm;
+senhaadm = document.admform.admsenha.value
+  if ((senhaadm =="") || (senhaadm.length < 4)){
+    alert("Senha Errada.");
+    document.admform.admsenha.focus();
+    document.admform.admsenha.style.background = "#ffcc99";
+    document.admform.admsenha.value = "";
+    document.admform.admnome.style.background = "#f2f2f2";
+    return false;
+  }
+
+  //ter numero e letra
+    var lmais = 0;
+    var numero = 0;
+    var i = 0
+      for (i; i <= senhaadm.length; i++) {
+        var valorAscii = senhaadm.charCodeAt(i)
+        // A- Z
+        if (valorAscii >= 65 && valorAscii <= 90)
+          lmais++;
+        // 0 - 9
+        if (valorAscii >= 48 && valorAscii <= 57)
+          numero++;
+                }
+
+      if ((lmais < 1 || numero < 1) || (senhaadm=="1234") || (senhaadm== "4321") || (senhaadm.charAt(0) == senhaadm.charAt(1)) & (senhaadm.charAt(1) == senhaadm.charAt(2)) & (senhaadm.charAt(2) == senhaadm.charAt(3))){
+        alert("Senha Errada.");
+        document.admform.admsenha.focus();
+        document.admform.admsenha.style.background = "#ffcc99";
+        document.admform.admsenha.value = "";
+        document.admform.admnome.style.background = "#f2f2f2";
+        return false;
+              }
+
+//mandar para o banco de dados------------------------------------------
+document.admform.submit();
+}
+
+</script>
+
+
+</body>
+</html>

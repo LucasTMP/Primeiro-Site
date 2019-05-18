@@ -1,0 +1,273 @@
+
+<html class="no-js" lang="pt-BR">
+  <head>
+      <meta charset="UTF-8">
+  <title>Primuz Burger & Chickens</title>
+  <style type="text/css">
+  body, html {
+      height: 100%;
+      margin: 0;
+        }
+      .bg {
+      background-image: url("fundo2.jpg");
+      height: 100%;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      }
+
+      header{
+      		background:  #0d0d0d;
+      		width: 100%;
+      		height: 13%;
+      			}
+
+
+      .htexttop{
+        color: #fff;
+        margin-left: 10%;
+        margin-top: 12px;
+        font-size: 16pt;
+      }
+
+
+
+      .hrow{
+          width: 100%;
+      		}
+
+      .coluna{
+        width: 50%;
+        float: left;
+      }
+
+
+  </style>
+
+</head>
+
+
+<body class="bg">
+<header>
+
+  <div class="hrow">
+	<div class="coluna">
+		<div class="htexttop">
+		Funcionario:
+		</div>
+			<font style="font-size: 14pt; color: white; margin-left:15%; margin-top: 12px;"> Lucas Samuel W. </font>
+		</div>
+
+
+		<div class="coluna">
+      <div style=" margin-top: 12px;">
+			<a href="index.html"><img style="width: 50px; height: 50px; margin-left: 47%;" src="images/deslogar.png" /></a>
+      </div>
+		</div>
+	</div>
+
+
+  </header>
+
+            </br>
+            </br>
+
+            <img style="float: left; width: 50%; height: 65%; margin-bottom:50px;" src="images/promofunci.jpg" />
+              <img style="margin-left: 19%; width: 150px; height: 150px; margin-bottom: 15px;" src="images/logo_header.jpg" />
+
+
+
+            <form method="post"  action="registrarcompra.jsp" name="formpagadm">
+              <label for="uname" style="margin-left: 18%;"><b>CPF: </b></label>
+              <input style="margin-left: 18%;" type="text" placeholder="Ex: 39984485536" name="admclicpf" maxlength="11" required><br />
+              <br />
+              <label for="psw" style="margin-left: 18%;"><b>Valor Da Compra: </b></label>
+              <input style="margin-left: 18%;" type="text" placeholder="Ex: 132.20" onblur="virgulaponto()" name="valcompra" maxlength="7" required><br />
+              <br />
+              <input type="button" style="margin-left: 18%; margin-right: 3%;" value="Registrar" onclick="pagadmval()"> <input type="reset" value="Limpar">
+              <br />
+              <br />
+            </form>
+
+            <form method="post"  action="consulsaldo.jsp" name="consulta">
+              <label for="uname" style="margin-left: 18%;"><b>CPF: (Consultar Saldo)</b></label>
+              <input style="margin-left: 18%;" type="text" placeholder="Ex: 39984485536" name="consulcpf" maxlength="11" required><br />
+              <input type="button" style="margin-left: 18%; margin-right: 2.8%;" value="Consultar" onclick="consulfuncio()"> <input type="reset" value="Limpar">
+            </form>
+
+            <script type="text/javascript">
+
+
+            function pagadmval(){
+
+
+            //valida cpf do cliente---------------------------------------------------------------------
+
+            var ccpf, cpfsoma, cpfresto;
+            soma = 0;
+            ccpf = document.formpagadm.admclicpf.value;
+            if ((ccpf=="") || (ccpf.length == 0) || (ccpf.length > 11) || (ccpf == "00000000000") || (ccpf == "11111111111") || (ccpf == "22222222222") || (ccpf == "33333333333") || (ccpf == "44444444444") || (ccpf == "55555555555") || (ccpf == "66666666666") || (ccpf == "77777777777") || (ccpf == "88888888888") || (ccpf == "99999999999")){
+                          alert("Preencha o campo CPF corretamente.");
+                          document.formpagadm.admclicpf.focus();
+                          document.formpagadm.admclicpf.style.background = "#ffcc99";
+                          document.formpagadm.admclicpf.value = "";
+                          document.formpagadm.datacompra.style.background = "#f2f2f2";
+                          document.formpagadm.datacompra.value = "";
+                          document.formpagadm.valcompra.style.background = "#f2f2f2";
+                          document.formpagadm.valcompra.value = "";
+                          document.formpagadm.saldo.style.background = "#f2f2f2";
+                          document.formpagadm.saldo.value = "";
+                          return false
+                } else {
+                        //valida 1 digito
+                        cpfsoma = 0;
+                         for (i=0; i < 9; i ++){
+                           cpfsoma += parseInt(ccpf.charAt(i)) * (10 - i);
+                             cpfresto = 11 - (cpfsoma % 11);
+                                        }
+                               if (cpfresto == 10 || cpfresto == 11){
+                                  cpfresto = 0;
+                                            }
+
+                                    if (cpfresto != parseInt(ccpf.charAt(9))){
+                                    alert("Digite um CPF válido.");
+                                    document.formpagadm.admclicpf.focus();
+                                    document.formpagadm.admclicpf.style.background = "#ffcc99";
+                                    document.formpagadm.admclicpf.value = "";
+                                    document.formpagadm.datacompra.style.background = "#f2f2f2";
+                                    document.formpagadm.datacompra.value = "";
+                                    document.formpagadm.valcompra.style.background = "#f2f2f2";
+                                    document.formpagadm.valcompra.value = "";
+                                    document.formpagadm.saldo.style.background = "#f2f2f2";
+                                    document.formpagadm.saldo.value = "";
+                                 return false;
+                                              }
+
+                              //valida 2 digito
+                              cpfsoma = 0;
+                                for (i = 0; i < 10; i ++){
+                                cpfsoma += parseInt(ccpf.charAt(i)) * (11 - i);
+                                cpfresto = 11 - (cpfsoma % 11);
+                                              }
+                                  if (cpfresto == 10 || cpfresto == 11){
+                                    cpfresto = 0;
+                                              }
+                                if (cpfresto != parseInt(ccpf.charAt(10))){
+                                  alert("Digite um CPF válido.");
+                                  document.formpagadm.admclicpf.focus();
+                                  document.formpagadm.admclicpf.style.background = "#ffcc99";
+                                  document.formpagadm.admclicpf.value = "";
+                                  document.formpagadm.datacompra.style.background = "#f2f2f2";
+                                  document.formpagadm.datacompra.value = "";
+                                  document.formpagadm.valcompra.style.background = "#f2f2f2";
+                                  document.formpagadm.valcompra.value = "";
+                                  document.formpagadm.saldo.style.background = "#f2f2f2";
+                                  document.formpagadm.saldo.value = "";
+                                  return false;
+                                            }
+                }
+
+            //valida data da compra-------------------------------------------------------------------------
+
+
+
+            //valida valor da compra-----------------------------------------------------------------------------
+
+
+                                  var compravali;
+                                  compravali = document.formpagadm.valcompra.value;
+                                  var letra = 0;
+                                  var y = 0
+                                      for (y; y <= compravali.length; y++) {
+                                var valorAsciicompra = compravali.charCodeAt(y)
+                                  // A- Z
+                                if (valorAsciicompra >= 65 && valorAsciicompra <= 122)
+                                      letra++;
+
+                                    }
+
+                      if ((compravali == "") || (compravali.length = 0) || (letra > 0)){
+                        alert("Digite um valor válido. (ex: 24.90)");
+                        document.formpagadm.valcompra.focus();
+                        document.formpagadm.valcompra.style.background = "#ffcc99";
+                        document.formpagadm.admclicpf.style.background = "#f2f2f2";
+                        document.formpagadm.datacompra.style.background = "#f2f2f2";
+                        document.formpagadm.saldo.style.background = "#f2f2f2";
+                        document.formpagadm.saldo.value = "";
+                        return false;
+                      }
+
+            //manda banco de dados-----------------------------------------------------------------------------------
+
+            document.formpagadm.submit();
+            }
+
+            //mudar virgula para ponto--------------------------------------
+
+                    function virgulaponto(){
+
+                    var compraval, mudar;
+                      compraval = document.formpagadm.valcompra.value;
+                      mudar= compraval.replace(",",".");
+                    if ((compraval.indexOf(",") > 0)){
+                        document.formpagadm.valcompra.value = mudar;
+                            }
+                          }
+
+                        //validas a consulta
+                          function consulfuncio(){
+
+                            var vccpf, vcpfsoma, vcpfresto;
+                            soma = 0;
+                            vccpf = document.consulta.consulcpf.value;
+                            if ((vccpf=="") || (vccpf.length == 0) || (vccpf.length > 11) || (vccpf == "00000000000") || (vccpf == "11111111111") || (vccpf == "22222222222") || (vccpf == "33333333333") || (vccpf == "44444444444") || (vccpf == "55555555555") || (vccpf == "66666666666") || (vccpf == "77777777777") || (vccpf == "88888888888") || (vccpf == "99999999999")){
+                                          alert("Preencha o campo CPF corretamente.");
+                                          document.consulta.consulcpf.focus();
+                                          document.consulta.consulcpf.style.background = "#ffcc99";
+                                          document.consulta.consulcpf.value = "";
+                                          return false
+                                } else {
+                                        //valida 1 digito
+                                        vcpfsoma = 0;
+                                         for (i=0; i < 9; i ++){
+                                           vcpfsoma += parseInt(vccpf.charAt(i)) * (10 - i);
+                                             vcpfresto = 11 - (vcpfsoma % 11);
+                                                        }
+                                               if (vcpfresto == 10 || vcpfresto == 11){
+                                                  vcpfresto = 0;
+                                                            }
+
+                                                    if (vcpfresto != parseInt(vccpf.charAt(9))){
+                                                    alert("Digite um CPF válido.");
+                                                    document.consulta.consulcpf.focus();
+                                                    document.consulta.consulcpf.style.background = "#ffcc99";
+                                                    document.consulta.consulcpf.value = "";
+                                                 return false;
+                                                              }
+
+                                              //valida 2 digito
+                                              vcpfsoma = 0;
+                                                for (i = 0; i < 10; i ++){
+                                                vcpfsoma += parseInt(vccpf.charAt(i)) * (11 - i);
+                                                vcpfresto = 11 - (vcpfsoma % 11);
+                                                              }
+                                                  if (vcpfresto == 10 || vcpfresto == 11){
+                                                    vcpfresto = 0;
+                                                              }
+                                                if (vcpfresto != parseInt(vccpf.charAt(10))){
+                                                  alert("Digite um CPF válido.");
+                                                  document.consulta.consulcpf.focus();
+                                                  document.consulta.consulcpf.style.background = "#ffcc99";
+                                                  document.consulta.consulcpf.value = "";
+                                                  return false;
+                                                            }
+                                                          }
+                                      document.consulta.submit();
+                                }
+
+            </script>
+
+
+                </body>
+
+                </html>
